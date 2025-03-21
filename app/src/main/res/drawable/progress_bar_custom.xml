@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Bordure noire fine -->
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="#000000" /> <!-- Noir -->
+            <corners android:radius="5dp"/>
+        </shape>
+    </item>
+
+    <!-- Fond de la barre de progression (clair) -->
+    <item android:top="1dp" android:bottom="1dp" android:left="1dp" android:right="1dp">
+        <shape android:shape="rectangle">
+            <solid android:color="#D6D6D6" /> <!-- Gris clair -->
+            <corners android:radius="4dp"/>
+        </shape>
+    </item>
+
+    <!-- Barre de progression colorée -->
+    <item android:id="@android:id/progress">
+        <clip>
+            <shape android:shape="rectangle">
+                <solid android:color="#915DD5"/> <!-- Violet -->
+                <corners android:radius="4dp"/>
+            </shape>
+        </clip>
+    </item>
+
+</layer-list>

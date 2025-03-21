@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="16dp"
+    android:layout_marginStart="8dp"
+    android:layout_marginEnd="8dp"
+    app:cardElevation="4dp"
+    app:cardCornerRadius="8dp"
+    android:backgroundTint="@color/cardBackgroundDark">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="16dp"
+        android:gravity="center_vertical">
+
+        <!-- Layout principal contenant texte et progression -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <!-- Titre et état de l'anime -->
+            <TextView
+                android:id="@+id/animeTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Titre de l'Anime"
+                android:textColor="@color/titleColorDark"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/animeStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="Statut: Fini"
+                android:textStyle="bold"
+                android:textColor="@color/orangeDark"
+                android:textSize="14sp" />
+
+            <!-- Liste des saisons -->
+            <LinearLayout
+                android:id="@+id/seasonsContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="8dp">
+
+                <!-- Exemple d'affichage d'une saison (ajouté dynamiquement dans le code) -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginBottom="8dp">
+
+                    <TextView
+                        android:id="@+id/seasonTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Saison 1 - 12/24 épisodes vus"
+                        android:textColor="@color/volumeColorDark"
+                        android:textSize="14sp"
+                        android:layout_marginBottom="4dp" />
+
+                    <ProgressBar
+                        android:id="@+id/seasonProgressBar"
+                        style="@android:style/Widget.ProgressBar.Horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="7dp"
+                        android:indeterminate="false"
+                        android:max="100"
+                        android:progress="50"
+                        android:progressTint="#3C4F76"
+                        android:progressBackgroundTint="#2D3A53"
+                        android:progressDrawable="@drawable/progress_bar_custom"/>
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <!-- Bouton Modifier -->
+            <Button
+                android:id="@+id/editButton"
+                android:layout_width="wrap_content"
+                android:layout_height="32dp"
+                android:layout_marginTop="8dp"
+                android:backgroundTint="@color/cardview_dark_background"
+                android:text="Modifier"
+                android:textColor="@android:color/white"
+                android:textSize="12sp" />
+
+        </LinearLayout>
+
+        <!-- Image de l'anime -->
+        <ImageView
+            android:id="@+id/animeCover"
+            android:layout_width="100dp"
+            android:layout_height="140dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/default_cover"
+            android:layout_marginStart="12dp"/>
+
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

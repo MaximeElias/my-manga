@@ -1,0 +1,140 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/searchBackgroundDark"
+    android:orientation="vertical">
+
+    <!-- Linear Layout for buttons -->
+    <LinearLayout
+        android:id="@+id/buttonLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="7dp"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal"
+        android:padding="8dp">
+
+        <Button
+            android:id="@+id/buttonMangas"
+            android:layout_width="0dp"
+            android:layout_height="32dp"
+            android:layout_weight="1"
+            android:layout_marginEnd="8dp"
+            android:background="@color/cardBackgroundDark"
+            android:elevation="4dp"
+            android:padding="8dp"
+            android:text="Mangas"
+            android:textColor="@color/white"
+            android:textSize="12sp" />
+
+        <Button
+            android:id="@+id/buttonAnimes"
+            android:layout_width="0dp"
+            android:layout_height="32dp"
+            android:layout_weight="1"
+            android:layout_marginEnd="8dp"
+            android:background="@color/cardBackgroundDark"
+            android:elevation="4dp"
+            android:padding="8dp"
+            android:text="Animes"
+            android:textColor="@color/white"
+            android:textSize="12sp" />
+
+        <Button
+            android:id="@+id/buttonNotes"
+            android:layout_width="0dp"
+            android:layout_height="32dp"
+            android:layout_weight="1"
+            android:background="@color/cardBackgroundDark"
+            android:elevation="4dp"
+            android:padding="8dp"
+            android:text="Notes"
+            android:textColor="@color/white"
+            android:textSize="12sp" />
+    </LinearLayout>
+
+    <!-- FrameLayout with SearchView inside -->
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/search_border"
+        android:paddingStart="8dp"
+        android:paddingTop="4dp"
+        android:paddingEnd="8dp"
+        android:paddingBottom="4dp">
+
+        <androidx.appcompat.widget.SearchView
+            android:id="@+id/searchView"
+            style="@style/CustomSearchView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:queryHint="Search..."
+            android:textColor="@color/searchTextColorDark"
+            android:textColorHint="@color/searchTextColorDark" />
+    </FrameLayout>
+
+    <!-- Counters Layout (Smaller size) -->
+    <LinearLayout
+        android:id="@+id/countersLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:background="@color/searchBackgroundDark"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="8dp">
+
+        <TextView
+            android:id="@+id/tomesPossedesCounter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:paddingEnd="16dp"
+            android:text="Possédés: 0"
+            android:textColor="@color/white"
+            android:textSize="14sp" /> <!-- Reduced text size -->
+
+        <TextView
+            android:id="@+id/tomesLusCounter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:paddingEnd="16dp"
+            android:text="Lus: 0"
+            android:textColor="@color/white"
+            android:textSize="14sp" /> <!-- Reduced text size -->
+
+        <TextView
+            android:id="@+id/seriesCounter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Séries: 0"
+            android:textColor="@color/white"
+            android:textSize="14sp" /> <!-- Reduced text size -->
+    </LinearLayout>
+
+    <!-- Add Series Button (Smaller size) -->
+    <Button
+        android:id="@+id/buttonAddSeries"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:background="@color/cardBackgroundDark"
+        android:elevation="4dp"
+        android:padding="8dp"
+        android:text="Ajouter une série"
+        android:textColor="@color/white"
+        android:textSize="16sp" />
+
+    <!-- RecyclerView -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewMangas"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="8dp"
+        android:layout_weight="1"
+        android:background="@color/searchBackgroundDark" />
+</LinearLayout>

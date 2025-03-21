@@ -1,0 +1,7 @@
+<resources>
+    <string-array name="state_options">
+        <item>En Cours</item>
+        <item>Fini</item>
+        <item>Abandonné</item>
+    </string-array>
+</resources>

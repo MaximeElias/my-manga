@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="CustomSearchView" parent="Widget.AppCompat.SearchView">
+        <item name="searchIcon">@drawable/ic_search_white</item>
+        <item name="closeIcon">@drawable/ic_close_white</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textColorHint">@color/white</item>
+        <item name="android:statusBarColor">@color/statusBarColorDark</item>
+        <item name="android:iconifiedByDefault">false</item>
+
+        <!-- Icône de recherche -->
+        <item name="android:queryBackground">@android:color/transparent</item>
+        <item name="android:searchIcon">@drawable/ic_search_white</item> <!-- Icône personnalisée -->
+        <item name="android:closeIcon">@drawable/ic_search_white</item> <!-- Icône de fermeture personnalisée -->
+    </style>
+
+    <style name="AppTheme" parent="Theme.AppCompat.NoActionBar">
+        <item name="colorPrimary">@color/statusBarColorDark</item>
+        <item name="colorPrimaryDark">@color/statusBarColorDark</item>
+    </style>
+
+    <style name="MyAlertDialogTheme" parent="ThemeOverlay.AppCompat.Dialog.Alert">
+        <item name="android:windowBackground">@color/cardBackgroundDark</item>
+        <item name="android:textColorPrimary">@android:color/white</item>
+        <item name="android:buttonBarPositiveButtonStyle">@style/MyAlertDialogButton</item>
+        <item name="android:buttonBarNegativeButtonStyle">@style/MyAlertDialogButton</item>
+    </style>
+
+    <style name="MyAlertDialogButton" parent="Widget.AppCompat.Button.ButtonBar.AlertDialog">
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+    <style name="CustomDialog" parent="Theme.MaterialComponents.Light.Dialog">
+        <item name="android:windowBackground">@android:color/transparent</item>
+    </style>
+</resources>
