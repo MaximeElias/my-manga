@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_marginBottom="8dp">
+
+    <TextView
+        android:id="@+id/seasonTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Saison 1 - 12/24 épisodes vus"
+        android:textColor="@color/volumeColorDark"
+        android:textSize="14sp"
+        android:layout_marginBottom="4dp" />
+
+    <ProgressBar
+        android:id="@+id/seasonProgressBar"
+        style="@android:style/Widget.ProgressBar.Horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="7dp"
+        android:indeterminate="false"
+        android:max="100"
+        android:progress="50"
+        android:progressTint="#3C4F76"
+        android:progressBackgroundTint="#2D3A53"
+        android:progressDrawable="@drawable/progress_bar_custom"/>
+
+</LinearLayout>

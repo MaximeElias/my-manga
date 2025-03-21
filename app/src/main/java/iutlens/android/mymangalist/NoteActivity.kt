@@ -30,6 +30,7 @@ class NotesActivity : AppCompatActivity() {
 
         val buttonMangas = findViewById<Button>(R.id.buttonMangas)
         val buttonExportJson = findViewById<Button>(R.id.buttonExportJson)
+        val buttonAnime = findViewById<Button>(R.id.buttonAnimes)
 
         buttonMangas.setOnClickListener {
             val intent = Intent(this, MainActivity::class.java)
@@ -37,6 +38,10 @@ class NotesActivity : AppCompatActivity() {
         }
         buttonExportJson.setOnClickListener {
             save() // Appelez saveMangasToJSON()
+        }
+        buttonAnime.setOnClickListener {
+            val intent = Intent(this, AnimeActivity::class.java)
+            startActivity(intent)
         }
     }
 

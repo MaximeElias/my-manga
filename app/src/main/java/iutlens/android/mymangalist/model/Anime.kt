@@ -1,7 +1,9 @@
 package iutlens.android.mymangalist.model
 
 data class Anime(
+    val id: Int,
     val title: String,
-    val status: String,
-    val seasons: List<Season>
+    val state: String,
+    val seasons: List<Season>,
+    val coverUrl: String
 )

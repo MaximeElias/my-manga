@@ -47,9 +47,14 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val buttonNotes = findViewById<Button>(R.id.buttonNotes)
+        val buttonAnime = findViewById<Button>(R.id.buttonAnimes)
 
         buttonNotes.setOnClickListener {
             val intent = Intent(this, NotesActivity::class.java)
+            startActivity(intent)
+        }
+        buttonAnime.setOnClickListener {
+            val intent = Intent(this, AnimeActivity::class.java)
             startActivity(intent)
         }
 
