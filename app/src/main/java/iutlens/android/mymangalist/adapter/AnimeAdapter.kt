@@ -6,10 +6,9 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.ProgressBar
 import android.widget.TextView
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import iutlens.android.mymangalist.R
-import iutlens.android.mymangalist.databinding.AnimeItemBinding
+import iutlens.android.mymangalist.databinding.ItemAnimeBinding
 import iutlens.android.mymangalist.model.Anime
 import coil.load
 import coil.request.CachePolicy
@@ -25,7 +24,7 @@ class AnimeAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AnimeViewHolder {
-        val binding = AnimeItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding = ItemAnimeBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return AnimeViewHolder(binding)
     }
 
@@ -37,7 +36,7 @@ class AnimeAdapter(
 
     override fun getItemCount(): Int = animes.size
 
-    inner class AnimeViewHolder(private val binding: AnimeItemBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class AnimeViewHolder(private val binding: ItemAnimeBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(anime: Anime) {
             binding.animeTitle.text = anime.title
             binding.animeState.text = "Statut: ${anime.state}"
@@ -46,7 +45,7 @@ class AnimeAdapter(
             binding.seasonsContainer.removeAllViews()
 
             anime.seasons.forEach { season ->
-                val seasonLayout = LayoutInflater.from(binding.root.context).inflate(R.layout.season_item, binding.seasonsContainer, false) as LinearLayout
+                val seasonLayout = LayoutInflater.from(binding.root.context).inflate(R.layout.item_season, binding.seasonsContainer, false) as LinearLayout
                 val seasonTitle = seasonLayout.findViewById<TextView>(R.id.seasonTitle)
                 val seasonProgressBar = seasonLayout.findViewById<ProgressBar>(R.id.seasonProgressBar)
 

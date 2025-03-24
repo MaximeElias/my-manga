@@ -262,9 +262,9 @@ class AnimeActivity : AppCompatActivity() {
         val stateAdapter = android.widget.ArrayAdapter.createFromResource(
             this,
             R.array.state_options,
-            R.layout.spinner_item
+            R.layout.item_spinner
         )
-        stateAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item)
+        stateAdapter.setDropDownViewResource(R.layout.item_spinner_dropdown)
         spinnerState.adapter = stateAdapter
 
         buttonAdd.setOnClickListener {
@@ -304,9 +304,9 @@ class AnimeActivity : AppCompatActivity() {
         val stateAdapter = android.widget.ArrayAdapter.createFromResource(
             this,
             R.array.state_options,
-            R.layout.spinner_item
+            R.layout.item_spinner
         )
-        stateAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item)
+        stateAdapter.setDropDownViewResource(R.layout.item_spinner_dropdown)
         spinnerState.adapter = stateAdapter
         spinnerState.setSelection(stateAdapter.getPosition(anime.state))
 

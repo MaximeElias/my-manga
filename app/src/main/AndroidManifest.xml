@@ -30,6 +30,8 @@
 
         <activity android:name=".NotesActivity" />
 
+        <activity android:name=".AnimeActivity" />
+
     </application>
 
 </manifest>

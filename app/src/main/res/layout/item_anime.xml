@@ -88,8 +88,9 @@
                 android:id="@+id/editButton"
                 android:layout_width="wrap_content"
                 android:layout_height="32dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
                 android:backgroundTint="@color/cardview_dark_background"
+                android:padding="4dp"
                 android:text="Modifier"
                 android:textColor="@android:color/white"
                 android:textSize="12sp" />
