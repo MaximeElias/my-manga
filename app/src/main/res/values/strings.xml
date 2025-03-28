@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">My Manga List</string>
+    <string name="notes">Notes</string>
+    <string name="owned">Possédés: 0</string>
+    <string name="read">Lus: 0</string>
+    <string name="series">Séries: 0</string>
+    <string name="mangas">Mangas</string>
+    <string name="make_notes">Entrez vos notes ici…</string>
+    <string name="export_json">Exporter JSON</string>
 </resources>

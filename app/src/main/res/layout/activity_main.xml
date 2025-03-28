@@ -4,29 +4,6 @@
     android:background="@color/searchBackgroundDark"
     android:orientation="vertical">
 
-    <!-- Linear Layout for buttons -->
-    <LinearLayout
-        android:id="@+id/buttonLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="7dp"
-        android:gravity="center_horizontal"
-        android:orientation="horizontal"
-        android:padding="8dp">
-
-        <Button
-            android:id="@+id/buttonNotes"
-            android:layout_width="0dp"
-            android:layout_height="32dp"
-            android:layout_weight="1"
-            android:background="@color/cardBackgroundDark"
-            android:elevation="4dp"
-            android:padding="8dp"
-            android:text="Notes"
-            android:textColor="@color/white"
-            android:textSize="12sp" />
-    </LinearLayout>
-
     <!-- FrameLayout with SearchView inside -->
     <FrameLayout
         android:layout_width="match_parent"
@@ -62,12 +39,13 @@
         android:padding="8dp">
 
         <TextView
-            android:id="@+id/tomesPossedesCounter"
+            android:id="@+id/tomesOwnedCounter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
+            android:paddingStart="16dp"
             android:paddingEnd="16dp"
-            android:text="Possédés: 0"
+            android:text="@string/owned"
             android:textColor="@color/white"
             android:textSize="14sp" /> <!-- Reduced text size -->
 
@@ -76,8 +54,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
+            android:paddingStart="16dp"
             android:paddingEnd="16dp"
-            android:text="Lus: 0"
+            android:text="@string/read"
             android:textColor="@color/white"
             android:textSize="14sp" /> <!-- Reduced text size -->
 
@@ -85,7 +64,7 @@
             android:id="@+id/seriesCounter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Séries: 0"
+            android:text="@string/series"
             android:textColor="@color/white"
             android:textSize="14sp" /> <!-- Reduced text size -->
     </LinearLayout>
@@ -111,4 +90,27 @@
         android:layout_marginTop="8dp"
         android:layout_weight="1"
         android:background="@color/searchBackgroundDark" />
+
+    <!-- Linear Layout for buttons -->
+    <LinearLayout
+        android:id="@+id/buttonLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="7dp"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal"
+        android:padding="8dp">
+
+        <Button
+            android:id="@+id/buttonNotes"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:background="@color/cardBackgroundDark"
+            android:elevation="4dp"
+            android:padding="8dp"
+            android:text="@string/notes"
+            android:textColor="@color/white"
+            android:textSize="12sp" />
+    </LinearLayout>
 </LinearLayout>

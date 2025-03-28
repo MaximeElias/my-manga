@@ -197,7 +197,7 @@ class MainActivity : AppCompatActivity() {
         val totalSeries = dbHelper.getTotalSeries()
 
         // Récupération des TextView une seule fois
-        val tomesPossedesCounter = findViewById<TextView>(R.id.tomesPossedesCounter)
+        val tomesPossedesCounter = findViewById<TextView>(R.id.tomesOwnedCounter)
         val tomesLusCounter = findViewById<TextView>(R.id.tomesLusCounter)
         val seriesCounter = findViewById<TextView>(R.id.seriesCounter)
 

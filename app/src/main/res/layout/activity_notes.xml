@@ -16,13 +16,13 @@
         <Button
             android:id="@+id/buttonMangas"
             android:layout_width="0dp"
-            android:layout_height="32dp"
+            android:layout_height="40dp"
             android:layout_weight="1"
             android:layout_marginEnd="8dp"
             android:background="@color/cardBackgroundDark"
             android:elevation="4dp"
             android:padding="8dp"
-            android:text="Mangas"
+            android:text="@string/mangas"
             android:textColor="@color/white"
             android:textSize="12sp" />
     </LinearLayout>
@@ -35,7 +35,7 @@
         android:layout_margin="16dp"
         android:background="@drawable/search_border"
         android:gravity="top|start"
-        android:hint="Entrez vos notes ici..."
+        android:hint="@string/make_notes"
         android:padding="8dp"
         android:textColor="@color/searchTextColorDark"
         android:textColorHint="@color/searchTextColorDark" />
@@ -48,7 +48,7 @@
         android:background="@color/cardBackgroundDark"
         android:elevation="4dp"
         android:padding="12dp"
-        android:text="Exporter JSON"
+        android:text="@string/export_json"
         android:textColor="@color/white"
         android:textSize="16sp" />
 
