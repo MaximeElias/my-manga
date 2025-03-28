@@ -53,9 +53,9 @@ class MangaAdapter(
 
             val context = binding.root.context
             val textColor = when (manga.state) {
-                "Fini" -> ContextCompat.getColor(context, R.color.green)
-                "Abandonné" -> ContextCompat.getColor(context, R.color.red)
-                else -> ContextCompat.getColor(context, R.color.orange)
+                "Fini" -> ContextCompat.getColor(context, R.color.dark_gray)
+                "Abandonné" -> ContextCompat.getColor(context, R.color.dark_gray)
+                else -> ContextCompat.getColor(context, R.color.dark_gray)
             }
 
             binding.chapitre.text = "Chapitre lu: ${manga.chapitre}"

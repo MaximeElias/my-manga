@@ -1,20 +1,19 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/searchBackgroundDark"
+    android:background="@color/white"
     android:orientation="vertical">
 
-    <!-- FrameLayout with SearchView inside -->
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="24dp"
         android:background="@drawable/search_border"
-        android:paddingStart="8dp"
+        android:paddingStart="12dp"
         android:paddingTop="4dp"
-        android:paddingEnd="8dp"
+        android:paddingEnd="12dp"
         android:paddingBottom="4dp">
 
         <androidx.appcompat.widget.SearchView
@@ -22,18 +21,18 @@
             style="@style/CustomSearchView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/light_gray"
             android:queryHint="Search..."
-            android:textColor="@color/searchTextColorDark"
-            android:textColorHint="@color/searchTextColorDark" />
+            android:textColor="@color/black"
+            android:textColorHint="@color/black" />
     </FrameLayout>
 
-    <!-- Counters Layout (Smaller size) -->
     <LinearLayout
         android:id="@+id/countersLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:background="@color/searchBackgroundDark"
+        android:background="@color/white"
         android:gravity="center"
         android:orientation="horizontal"
         android:padding="8dp">
@@ -46,8 +45,9 @@
             android:paddingStart="16dp"
             android:paddingEnd="16dp"
             android:text="@string/owned"
-            android:textColor="@color/white"
-            android:textSize="14sp" /> <!-- Reduced text size -->
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/tomesLusCounter"
@@ -57,41 +57,31 @@
             android:paddingStart="16dp"
             android:paddingEnd="16dp"
             android:text="@string/read"
-            android:textColor="@color/white"
-            android:textSize="14sp" /> <!-- Reduced text size -->
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/seriesCounter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
             android:text="@string/series"
-            android:textColor="@color/white"
-            android:textSize="14sp" /> <!-- Reduced text size -->
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            android:textStyle="bold" />
     </LinearLayout>
 
-    <!-- Add Series Button (Smaller size) -->
-    <Button
-        android:id="@+id/buttonAddSeries"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:background="@color/cardBackgroundDark"
-        android:elevation="4dp"
-        android:padding="8dp"
-        android:text="Ajouter une série"
-        android:textColor="@color/white"
-        android:textSize="16sp" />
-
-    <!-- RecyclerView -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewMangas"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="8dp"
         android:layout_weight="1"
-        android:background="@color/searchBackgroundDark" />
+        android:background="@color/white" />
 
-    <!-- Linear Layout for buttons -->
     <LinearLayout
         android:id="@+id/buttonLayout"
         android:layout_width="match_parent"
@@ -99,18 +89,37 @@
         android:layout_marginTop="7dp"
         android:gravity="center_horizontal"
         android:orientation="horizontal"
-        android:padding="8dp">
+        android:padding="8dp" >
 
-        <Button
-            android:id="@+id/buttonNotes"
+        <ImageButton
+            android:id="@+id/buttonAddSeries"
             android:layout_width="0dp"
-            android:layout_height="40dp"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@color/cardBackgroundDark"
+            android:layout_margin="8dp"
             android:elevation="4dp"
             android:padding="8dp"
-            android:text="@string/notes"
-            android:textColor="@color/white"
-            android:textSize="12sp" />
+            android:src="@drawable/ic_add" />
+
+        <ImageButton
+            android:id="@+id/buttonHome"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_margin="8dp"
+            android:elevation="4dp"
+            android:padding="8dp"
+            android:radius="8dp"
+            android:src="@drawable/ic_home" />
+
+        <ImageButton
+            android:id="@+id/buttonNotes"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_margin="8dp"
+            android:elevation="4dp"
+            android:padding="8dp"
+            android:src="@drawable/ic_notes" />
     </LinearLayout>
 </LinearLayout>

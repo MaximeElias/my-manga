@@ -3,20 +3,22 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="16dp"
+    android:layout_marginTop="8dp"
+    android:layout_marginBottom="8dp"
     android:layout_marginStart="8dp"
     android:layout_marginEnd="8dp"
     app:cardElevation="4dp"
     app:cardCornerRadius="8dp"
-    android:backgroundTint="@color/cardBackgroundDark">
+    android:backgroundTint="@color/white">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?android:attr/selectableItemBackground"
+        android:baselineAligned="false"
+        android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:padding="16dp"
-        android:gravity="center_vertical">
+        android:padding="16dp">
 
         <LinearLayout
             android:layout_width="0dp"
@@ -29,8 +31,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
-                android:text="Titre du Manga"
-                android:textColor="@color/titleColorDark"
+                android:text="@string/title"
+                android:textColor="@color/black"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
@@ -39,18 +41,18 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="4dp"
-                android:text="En Cours"
-                android:textStyle="bold"
-                android:textColor="@color/orangeDark"
-                android:textSize="14sp" />
+                android:text="@string/state"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/mangaVolumesOwned"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="4dp"
-                android:text="Tomes possédés: 0"
-                android:textColor="@color/volumeColorDark"
+                android:text="@string/owned_tome"
+                android:textColor="@color/black"
                 android:textSize="14sp" />
 
             <ProgressBar
@@ -62,17 +64,17 @@
                 android:indeterminate="false"
                 android:max="100"
                 android:progress="0"
-                android:progressTint="#3C4F76"
-                android:progressBackgroundTint="#2D3A53"
-                android:progressDrawable="@drawable/progress_bar_custom"/>
+                android:progressBackgroundTint="@color/light_gray"
+                android:progressDrawable="@drawable/progress_bar_custom"
+                android:progressTint="@color/dark_red" />
 
             <TextView
                 android:id="@+id/mangaVolumesRead"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Tomes lus: 0"
-                android:textColor="@color/volumeColorDark"
                 android:layout_marginTop="8dp"
+                android:text="@string/read_tome"
+                android:textColor="@color/dark_gray"
                 android:textSize="14sp" />
 
             <ProgressBar
@@ -84,37 +86,35 @@
                 android:indeterminate="false"
                 android:max="100"
                 android:progress="0"
-                android:progressTint="#3C4F76"
-                android:progressBackgroundTint="#2D3A53"
-                android:progressDrawable="@drawable/progress_bar_custom"/>
+                android:progressBackgroundTint="@color/light_gray"
+                android:progressDrawable="@drawable/progress_bar_custom"
+                android:progressTint="@color/dark_red" />
 
             <TextView
                 android:id="@+id/chapitre"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Chapitres lus: 0"
-                android:textColor="@color/volumeColorDark"
                 android:layout_marginTop="8dp"
+                android:text="@string/read_chapter"
+                android:textColor="@color/black"
                 android:textSize="14sp" />
         </LinearLayout>
 
-        <!-- Layout contenant la jaquette + le bouton Modifier -->
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
+            android:layout_marginStart="12dp"
             android:gravity="center"
-            android:layout_marginStart="12dp">
+            android:orientation="vertical">
 
-            <!-- Bouton Modifier placé au-dessus de l'image -->
             <Button
                 android:id="@+id/editButton"
                 android:layout_width="wrap_content"
                 android:layout_height="32dp"
                 android:layout_marginBottom="8dp"
-                android:backgroundTint="@color/cardview_dark_background"
+                android:backgroundTint="@color/dark_red"
                 android:padding="4dp"
-                android:text="Modifier"
+                android:text="@string/edit_button"
                 android:textColor="@android:color/white"
                 android:textSize="12sp" />
 

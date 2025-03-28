@@ -11,32 +11,37 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import iutlens.android.mymangalist.database.MangaDatabaseHelper
 import iutlens.android.mymangalist.database.saveMangasToJSON
+import androidx.core.content.edit
+import iutlens.android.mymangalist.databinding.ActivityNotesBinding
 
 class NotesActivity : AppCompatActivity() {
 
     private lateinit var noteEditText: EditText
     private lateinit var sharedPreferences: SharedPreferences
-    private lateinit var dbHelper: MangaDatabaseHelper // Ajoutez une instance de MangaDatabaseHelper
+    private lateinit var dbHelper: MangaDatabaseHelper
+    private lateinit var binding: ActivityNotesBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        setContentView(R.layout.activity_notes)
+        binding = ActivityNotesBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
         noteEditText = findViewById(R.id.noteEditText)
         sharedPreferences = getSharedPreferences("MyNotes", MODE_PRIVATE)
-        dbHelper = MangaDatabaseHelper(this) // Initialisez dbHelper
+        dbHelper = MangaDatabaseHelper(this)
 
         loadNotes()
 
-        val buttonMangas = findViewById<Button>(R.id.buttonMangas)
         val buttonExportJson = findViewById<Button>(R.id.buttonExportJson)
 
-        buttonMangas.setOnClickListener {
-            val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
-        }
         buttonExportJson.setOnClickListener {
-            save() // Appelez saveMangasToJSON()
+            save()
+        }
+
+        binding.buttonHome.setOnClickListener {
+            val intent = Intent(this, MainActivity::class.java) // Assurez-vous que MainActivity est correct
+            startActivity(intent)
         }
     }
 
@@ -50,11 +55,10 @@ class NotesActivity : AppCompatActivity() {
         noteEditText.setText(savedNote)
     }
 
-    @RequiresApi(Build.VERSION_CODES.GINGERBREAD)
     private fun saveNotes() {
-        val editor = sharedPreferences.edit()
-        editor.putString("note", noteEditText.text.toString())
-        editor.apply()
+        sharedPreferences.edit() {
+            putString("note", noteEditText.text.toString())
+        }
     }
 
     private fun save() {

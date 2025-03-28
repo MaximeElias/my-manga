@@ -37,7 +37,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var mangaAdapter: MangaAdapter
     private var mangaList: MutableList<Manga> = mutableListOf()
     private lateinit var dbHelper: MangaDatabaseHelper
-    private lateinit var addButton: Button
 
     @RequiresApi(Build.VERSION_CODES.Q)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,12 +45,20 @@ class MainActivity : AppCompatActivity() {
         val binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val buttonNotes = findViewById<Button>(R.id.buttonNotes)
+        dbHelper = MangaDatabaseHelper(this)
 
-        buttonNotes.setOnClickListener {
-            val intent = Intent(this, NotesActivity::class.java)
-            startActivity(intent)
-        }
+        mangaList = getMangasFromDB().toMutableList()
+        mangaAdapter = MangaAdapter(mangaList) { manga -> showEditDialog(manga) }
+        binding.recyclerViewMangas.layoutManager = LinearLayoutManager(this)
+        binding.recyclerViewMangas.adapter = mangaAdapter
+
+        setupSearchView()
+
+        setupStatusBar()
+
+        importMangasFromJSON(this)
+
+        updateTotalUI()
 
         val searchView = findViewById<SearchView>(R.id.searchView)
 
@@ -66,32 +73,14 @@ class MainActivity : AppCompatActivity() {
             searchView.setIconified(false)
         }
 
-        dbHelper = MangaDatabaseHelper(this)
-        addButton = findViewById(R.id.buttonAddSeries)
-
-        addButton.setOnClickListener {
-            showAddSeriesDialog()
+        binding.buttonNotes.setOnClickListener {
+            val intent = Intent(this, NotesActivity::class.java)
+            startActivity(intent)
         }
 
-        // Configuration de la barre d'état
-        setupStatusBar()
-
-        // Importer les mangas depuis JSON si nécessaire
-        importMangasFromJSON(this)
-
-        // Récupération des mangas depuis la base de données
-        mangaList = getMangasFromDB().toMutableList()
-
-        // Configuration du RecyclerView
-        mangaAdapter = MangaAdapter(mangaList) { manga -> showEditDialog(manga) }
-        binding.recyclerViewMangas.layoutManager = LinearLayoutManager(this)
-        binding.recyclerViewMangas.adapter = mangaAdapter
-
-        // Récupérer les valeurs
-        updateTotalUI()
-
-        // Configuration du SearchView
-        setupSearchView()
+        binding.buttonAddSeries.setOnClickListener {
+            showAddSeriesDialog()
+        }
     }
 
     private fun addSeriesToDatabase(
@@ -129,10 +118,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupStatusBar() {
-        window.statusBarColor = ContextCompat.getColor(this, R.color.searchBackgroundDark)
+        window.statusBarColor = ContextCompat.getColor(this, R.color.dark_gray)
         val window: Window = window
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-        window.statusBarColor = ContextCompat.getColor(this, R.color.statusBarColorDark)
+        window.statusBarColor = ContextCompat.getColor(this, R.color.dark_gray)
     }
 
     private fun setupSearchView() {
