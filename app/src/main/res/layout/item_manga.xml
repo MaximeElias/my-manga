@@ -114,7 +114,7 @@
                 android:layout_marginBottom="8dp"
                 android:backgroundTint="@color/dark_red"
                 android:padding="4dp"
-                android:text="@string/edit_button"
+                android:text="@string/button_edit"
                 android:textColor="@android:color/white"
                 android:textSize="12sp" />
 

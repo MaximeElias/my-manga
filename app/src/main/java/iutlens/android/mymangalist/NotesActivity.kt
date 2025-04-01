@@ -2,12 +2,10 @@ package iutlens.android.mymangalist
 
 import android.content.Intent
 import android.content.SharedPreferences
-import android.os.Build
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import iutlens.android.mymangalist.database.MangaDatabaseHelper
 import iutlens.android.mymangalist.database.saveMangasToJSON
@@ -40,7 +38,7 @@ class NotesActivity : AppCompatActivity() {
         }
 
         binding.buttonHome.setOnClickListener {
-            val intent = Intent(this, MainActivity::class.java) // Assurez-vous que MainActivity est correct
+            val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
         }
     }
