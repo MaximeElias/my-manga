@@ -1,182 +1,97 @@
 package iutlens.android.mymangalist
 
 import android.content.Intent
-import android.graphics.PorterDuff
-import android.os.Build
-import android.widget.Spinner
-import android.widget.ArrayAdapter
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.Window
-import android.view.WindowManager
-import android.widget.Button
-import android.widget.EditText
-import android.widget.ImageView
-import android.widget.TextView
-import androidx.annotation.RequiresApi
-import androidx.appcompat.app.AlertDialog
+import android.widget.ImageButton
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import iutlens.android.mymangalist.adapter.MangaAdapter
-import iutlens.android.mymangalist.database.MangaDatabaseHelper
-import iutlens.android.mymangalist.database.MangaDatabaseHelper.Companion.COLUMN_TITLE
-import iutlens.android.mymangalist.database.importMangasFromJSON
 import iutlens.android.mymangalist.databinding.ActivityMainBinding
-import iutlens.android.mymangalist.model.Manga
-import coil.load
+import iutlens.android.mymangalist.model.Serie
 
 class MainActivity : AppCompatActivity() {
 
+    private lateinit var binding: ActivityMainBinding
     private lateinit var mangaAdapter: MangaAdapter
-    private var mangaList: MutableList<Manga> = mutableListOf()
-    private lateinit var dbHelper: MangaDatabaseHelper
 
-    @RequiresApi(Build.VERSION_CODES.Q)
+    private var libraryList: MutableList<Serie> = mutableListOf()
+    private var displayedList: List<Serie> = emptyList()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val binding = ActivityMainBinding.inflate(layoutInflater)
+        binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        dbHelper = MangaDatabaseHelper(this)
+        window.statusBarColor = ContextCompat.getColor(this, R.color.dark_gray)
 
-        mangaList = getMangasFromDB().toMutableList()
-        mangaAdapter = MangaAdapter(mangaList) { manga -> showEditDialog(manga) }
+        mangaAdapter = MangaAdapter(emptyList()) { serie ->
+            val intent = Intent(this, MangaVolumesActivity::class.java)
+            intent.putExtra("SERIE_ID", serie.id)
+            startActivity(intent)
+        }
+
         binding.recyclerViewMangas.layoutManager = LinearLayoutManager(this)
         binding.recyclerViewMangas.adapter = mangaAdapter
 
         setupSearchView()
-
-        setupStatusBar()
-
-        importMangasFromJSON(this)
-
-        updateTotalUI()
-
-        val searchView = findViewById<SearchView>(R.id.searchView)
-
-        val searchMagIcon = searchView.findViewById<ImageView>(androidx.appcompat.R.id.search_mag_icon)
-        searchMagIcon.setColorFilter(ContextCompat.getColor(this, R.color.white), PorterDuff.Mode.SRC_IN)
-
-        val searchText = searchView.findViewById<EditText>(androidx.appcompat.R.id.search_src_text)
-        searchText.setTextColor(ContextCompat.getColor(this, R.color.white))
-        searchText.setHintTextColor(ContextCompat.getColor(this, R.color.white))
-
-        searchView.setOnClickListener {
-            searchView.setIconified(false)
-        }
-
-        binding.buttonNotes.setOnClickListener {
-            val intent = Intent(this, NotesActivity::class.java)
-            startActivity(intent)
-        }
-
-        binding.buttonAddSeries.setOnClickListener {
-            val intent = Intent(this, AddMangaActivity::class.java)
-            startActivity(intent)
-        }
+        setupBottomNavigation()
     }
 
-    private fun setupStatusBar() {
-        window.statusBarColor = ContextCompat.getColor(this, R.color.dark_gray)
-        val window: Window = window
-        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-        window.statusBarColor = ContextCompat.getColor(this, R.color.dark_gray)
+    override fun onResume() {
+        super.onResume()
+        reloadLibrary()
+    }
+
+    private fun reloadLibrary() {
+        MangaRepository.syncLibraryWithCatalogue(this)
+
+        val loaded = MangaRepository.loadLibrary(this)
+        MangaRepository.applyStates(this, loaded)
+
+        libraryList.clear()
+        libraryList.addAll(loaded)
+
+        // Filtre ≥ 1 chapitre lu + tri alphabétique
+        displayedList = libraryList
+            .filter { it.chaptersRead > 0 }
+            .sortedBy { it.title.lowercase() }
+
+        mangaAdapter.updateList(displayedList)
+        updateGlobalStats()
     }
 
     private fun setupSearchView() {
-        val searchView = findViewById<SearchView>(R.id.searchView)
-
-        val searchMagIconId = searchView.context.resources.getIdentifier(
-            "android:id/search_mag_icon", null, null
-        )
-        val searchMagIcon = searchView.findViewById<ImageView>(searchMagIconId)
-        searchMagIcon?.setColorFilter(ContextCompat.getColor(this, R.color.black), android.graphics.PorterDuff.Mode.SRC_IN) // Change to black
-
-        val searchTextId = searchView.context.resources.getIdentifier(
-            "android:id/search_src_text", null, null
-        )
-        val searchEditText = searchView.findViewById<EditText>(searchTextId)
-        searchEditText?.setTextColor(ContextCompat.getColor(this, R.color.black))
-        searchEditText?.setHintTextColor(ContextCompat.getColor(this, R.color.black))
-
-        val searchCloseButtonId = searchView.context.resources.getIdentifier(
-            "android:id/search_close_btn", null, null
-        )
-        val searchCloseButton = searchView.findViewById<ImageView>(searchCloseButtonId)
-        searchCloseButton?.setColorFilter(ContextCompat.getColor(this, R.color.black))
-
-        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String?): Boolean {
-                return false
-            }
+        binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?) = false
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                searchMagIcon?.setColorFilter(ContextCompat.getColor(this@MainActivity, R.color.black), android.graphics.PorterDuff.Mode.SRC_IN)
-
-                searchEditText?.setTextColor(ContextCompat.getColor(this@MainActivity, R.color.black))
-                searchEditText?.setHintTextColor(ContextCompat.getColor(this@MainActivity, R.color.black))
-
-                filterMangas(newText)
+                val filtered = if (newText.isNullOrEmpty()) {
+                    displayedList
+                } else {
+                    displayedList.filter { it.title.contains(newText, ignoreCase = true) }
+                }
+                mangaAdapter.updateList(filtered)
                 return true
             }
         })
-
-        searchView.setOnQueryTextFocusChangeListener { _, hasFocus ->
-            if (!hasFocus) {
-                searchMagIcon?.setColorFilter(ContextCompat.getColor(this@MainActivity, R.color.black), android.graphics.PorterDuff.Mode.SRC_IN)
-                searchEditText?.setTextColor(ContextCompat.getColor(this@MainActivity, R.color.black))
-                searchEditText?.setHintTextColor(ContextCompat.getColor(this@MainActivity, R.color.black))
-            }
-        }
     }
 
-    fun updateTotalUI() {
-        val totalTomesPossedes = dbHelper.getTotalTomesPossedes()
-        val totalTomesLus = dbHelper.getTotalTomesLus()
-        val totalSeries = dbHelper.getTotalSeries()
-
-        val tomesPossedesCounter = findViewById<TextView>(R.id.tomesOwnedCounter)
-        val tomesLusCounter = findViewById<TextView>(R.id.tomesLusCounter)
-        val seriesCounter = findViewById<TextView>(R.id.seriesCounter)
-
-        tomesPossedesCounter.text = "Possédés: $totalTomesPossedes"
-        tomesLusCounter.text = "Lus: $totalTomesLus"
-        seriesCounter.text = "Séries: $totalSeries"
+    private fun updateGlobalStats() {
+        binding.tomesOwnedCounter.text = "Tomes possédés: ${libraryList.sumOf { it.volumesOwned }}"
+        binding.tomesLusCounter.text   = "Tomes lus: ${libraryList.sumOf { it.volumesRead }}"
+        binding.seriesCounter.text     = "Séries: ${displayedList.size}"
     }
 
-    private fun getMangasFromDB(): List<Manga> {
-        val db = dbHelper.readableDatabase
-        val cursor = db.rawQuery("SELECT * FROM mangas ORDER BY $COLUMN_TITLE ASC", null)
-        val mangas = mutableListOf<Manga>()
-
-        while (cursor.moveToNext()) {
-            val id = cursor.getInt(cursor.getColumnIndexOrThrow("id"))
-            val title = cursor.getString(cursor.getColumnIndexOrThrow("title"))
-            val volumeIntegral = cursor.getInt(cursor.getColumnIndexOrThrow("volumeIntegral"))
-            val volumesOwned = cursor.getInt(cursor.getColumnIndexOrThrow("volumesOwned"))
-            val volumesRead = cursor.getInt(cursor.getColumnIndexOrThrow("volumesRead"))
-            val chapitre = cursor.getInt(cursor.getColumnIndexOrThrow("chapitre"))
-            val state = cursor.getString(cursor.getColumnIndexOrThrow("state"))
-            val coverUrl = cursor.getString(cursor.getColumnIndexOrThrow("coverUrl"))
-
-            mangas.add(Manga(id, title, volumeIntegral, volumesOwned, volumesRead, chapitre, state, coverUrl))
+    private fun setupBottomNavigation() {
+        findViewById<ImageButton>(R.id.buttonAddSeries).setOnClickListener {
+            startActivity(Intent(this, AddMangaActivity::class.java))
         }
-        cursor.close()
-        db.close()
-
-        return mangas
-    }
-
-    private fun filterMangas(query: String?) {
-        val filteredList = if (query.isNullOrEmpty()) {
-            mangaList
-        } else {
-            mangaList.filter { it.title.contains(query, ignoreCase = true) }
+        findViewById<ImageButton>(R.id.buttonHome).setOnClickListener { }
+        findViewById<ImageButton>(R.id.buttonNotes).setOnClickListener {
+            startActivity(Intent(this, NotesActivity::class.java))
         }
-
-        mangaAdapter.updateList(filteredList)
     }
 }

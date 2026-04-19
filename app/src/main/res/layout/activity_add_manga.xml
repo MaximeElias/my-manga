@@ -1,136 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@android:color/transparent"
-    app:cardCornerRadius="8dp"
-    app:cardElevation="4dp">
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white">
 
-    <LinearLayout
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="16dp"
-        android:background="@color/white">
+        android:layout_margin="16dp"
+        android:background="@drawable/search_border"
+        android:padding="8dp">
 
-        <ImageView
-            android:id="@+id/coverUrl"
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:contentDescription="@string/image_manga"
-            android:scaleType="centerCrop"
-            android:background="@color/light_gray"
-            android:src="@drawable/ic_launcher_foreground" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="@string/add_series"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:textColor="@android:color/black" />
-
-        <EditText
-            android:id="@+id/editTextTitle"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:autofillHints=""
-            android:hint="@string/title"
-            android:inputType="text"
-            android:textColor="@android:color/black"
-            android:textColorHint="@android:color/darker_gray" />
-
-        <EditText
-            android:id="@+id/editTextVolumeIntegral"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:autofillHints=""
-            android:hint="@string/volume_total"
-            android:inputType="number"
-            android:textColor="@android:color/black"
-            android:textColorHint="@android:color/darker_gray" />
-
-        <EditText
-            android:id="@+id/editTextVolumeOwned"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:autofillHints=""
-            android:hint="@string/volume_owned"
-            android:inputType="number"
-            android:textColor="@android:color/black"
-            android:textColorHint="@android:color/darker_gray" />
-
-        <EditText
-            android:id="@+id/editTextVolumesRead"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:autofillHints=""
-            android:hint="@string/volume_read"
-            android:inputType="number"
-            android:textColor="@android:color/black"
-            android:textColorHint="@android:color/darker_gray" />
-
-        <EditText
-            android:id="@+id/editTextChapitre"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:autofillHints=""
-            android:hint="@string/chapter_read"
-            android:inputType="number"
-            android:textColor="@android:color/black"
-            android:textColorHint="@android:color/darker_gray" />
-
-        <EditText
-            android:id="@+id/editTextCoverUrl"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:autofillHints=""
-            android:hint="@string/url_manga"
-            android:inputType="textUri"
-            android:textColor="@android:color/black"
-            android:textColorHint="@android:color/darker_gray" />
-
-        <Spinner
-            android:id="@+id/spinnerState"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:layout_marginTop="16dp"
-            android:entries="@array/state_options"
-            android:textColor="@color/white" />
-
-        <LinearLayout
+        <androidx.appcompat.widget.SearchView
+            android:id="@+id/searchView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="end"
-            android:layout_marginTop="16dp">
+            android:queryHint="Rechercher un manga..." />
+    </FrameLayout>
 
-            <Button
-                android:id="@+id/buttonCancel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/button_cancel"
-                android:background="@color/dark_red"
-                android:textColor="@android:color/white"
-                android:paddingStart="16dp"
-                android:paddingEnd="16dp"
-                android:layout_marginEnd="8dp"/>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewMangas"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
 
-            <View
-                android:layout_width="16dp"
-                android:layout_height="wrap_content" />
-
-            <Button
-                android:id="@+id/buttonAdd"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/button_add"
-                android:background="@color/dark_red"
-                android:textColor="@android:color/white"
-                android:paddingStart="16dp"
-                android:paddingEnd="16dp"/>
-        </LinearLayout>
-    </LinearLayout>
-</androidx.cardview.widget.CardView>
+</LinearLayout>

@@ -24,6 +24,12 @@
             android:layout_gravity="center_horizontal"
             android:src="@drawable/ic_launcher_foreground" />
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/title"
+            android:textColor="@android:color/black" />
+
         <EditText
             android:id="@+id/editTextTitle"
             android:layout_width="match_parent"
@@ -31,7 +37,13 @@
             android:autofillHints=""
             android:hint="@string/title"
             android:inputType="text"
-            android:textColor="@android:color/white" />
+            android:textColor="@android:color/black" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/volume_total"
+            android:textColor="@android:color/black" />
 
         <EditText
             android:id="@+id/editTextVolumeIntegral"
@@ -40,7 +52,13 @@
             android:autofillHints=""
             android:hint="@string/volume_total"
             android:inputType="number"
-            android:textColor="@android:color/white" />
+            android:textColor="@android:color/black" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/volume_owned"
+            android:textColor="@android:color/black" />
 
         <EditText
             android:id="@+id/editTextVolumeOwned"
@@ -49,7 +67,13 @@
             android:autofillHints=""
             android:hint="@string/volume_owned"
             android:inputType="number"
-            android:textColor="@android:color/white" />
+            android:textColor="@android:color/black" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/volume_read"
+            android:textColor="@android:color/black" />
 
         <EditText
             android:id="@+id/editTextVolumesRead"
@@ -58,7 +82,13 @@
             android:autofillHints=""
             android:hint="@string/volume_read"
             android:inputType="number"
-            android:textColor="@android:color/white" />
+            android:textColor="@android:color/black" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/chapter_read"
+            android:textColor="@android:color/black" />
 
         <EditText
             android:id="@+id/editTextChapitre"
@@ -67,7 +97,13 @@
             android:autofillHints=""
             android:hint="@string/chapter_read"
             android:inputType="number"
-            android:textColor="@android:color/white" />
+            android:textColor="@android:color/black" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/image_manga"
+            android:textColor="@android:color/black" />
 
         <EditText
             android:id="@+id/editTextCoverUrl"
@@ -76,7 +112,7 @@
             android:autofillHints=""
             android:hint="@string/image_manga"
             android:inputType="textUri"
-            android:textColor="@android:color/white" />
+            android:textColor="@android:color/black" />
 
         <Spinner
             android:id="@+id/spinnerState"

@@ -23,4 +23,5 @@
     <string name="volume_total">Volume Intégral</string>
     <string name="button_validate">Valider</string>
     <string name="button_delete">Supprimer</string>
+    <string name="import_json">Importer JSON</string>
 </resources>

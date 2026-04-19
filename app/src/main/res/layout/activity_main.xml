@@ -4,6 +4,7 @@
     android:background="@color/white"
     android:orientation="vertical">
 
+
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -29,7 +30,9 @@
         android:id="@+id/countersLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
         android:layout_marginTop="8dp"
+        android:layout_marginEnd="24dp"
         android:background="@color/white"
         android:gravity="center"
         android:orientation="horizontal"
@@ -37,39 +40,42 @@
 
         <TextView
             android:id="@+id/tomesOwnedCounter"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
+            android:layout_weight="1"
             android:paddingStart="16dp"
             android:paddingEnd="16dp"
-            android:text="@string/manga_owned"
+            android:text="Tomes possédés: 0"
             android:textColor="@color/black"
             android:textSize="14sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:gravity="center" />
 
         <TextView
             android:id="@+id/tomesLusCounter"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
+            android:layout_weight="1"
             android:paddingStart="16dp"
             android:paddingEnd="16dp"
-            android:text="@string/manga_read"
+            android:text="Tomes lus: 0"
             android:textColor="@color/black"
             android:textSize="14sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:gravity="center" />
 
         <TextView
             android:id="@+id/seriesCounter"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
+            android:layout_weight="1"
             android:paddingStart="16dp"
             android:paddingEnd="16dp"
-            android:text="@string/manga_series"
+            android:text="Séries: 0"
             android:textColor="@color/black"
             android:textSize="14sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:gravity="center" />
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView

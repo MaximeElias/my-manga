@@ -1,14 +1,19 @@
 package iutlens.android.mymangalist
 
+import android.content.Intent
 import android.os.Bundle
-import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
-import iutlens.android.mymangalist.database.MangaDatabaseHelper
+import androidx.appcompat.widget.SearchView
+import androidx.recyclerview.widget.LinearLayoutManager
+import iutlens.android.mymangalist.adapter.MangaTitleAdapter
 import iutlens.android.mymangalist.databinding.ActivityAddMangaBinding
+import iutlens.android.mymangalist.model.Serie
 
 class AddMangaActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityAddMangaBinding
+
+    private var allSeries: List<Serie> = emptyList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -16,45 +21,39 @@ class AddMangaActivity : AppCompatActivity() {
         binding = ActivityAddMangaBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        setupSpinner()
-        setupButtons()
+        // Catalogue trié alphabétique
+        allSeries = MangaRepository.loadCatalogue(this)
+            .sortedBy { it.title.lowercase() }
+
+        setupRecycler()
+        setupSearch()
     }
 
-    private fun setupSpinner() {
-        val stateAdapter = ArrayAdapter.createFromResource(
-            this,
-            R.array.state_options,
-            R.layout.item_spinner
-        )
-        stateAdapter.setDropDownViewResource(R.layout.item_spinner_dropdown)
-        binding.spinnerState.adapter = stateAdapter
-    }
+    private fun setupRecycler() {
+        val adapter = MangaTitleAdapter(allSeries) { serie ->
+            MangaRepository.addToLibrary(this, serie)
 
-    private fun setupButtons() {
-        binding.buttonAdd.setOnClickListener {
-            addSeries()
+            val intent = Intent(this, MangaVolumesActivity::class.java)
+            intent.putExtra("SERIE_ID", serie.id)
+            startActivity(intent)
         }
 
-        binding.buttonCancel.setOnClickListener {
-            finish()
-        }
+        binding.recyclerViewMangas.layoutManager = LinearLayoutManager(this)
+        binding.recyclerViewMangas.adapter = adapter
     }
 
-    private fun addSeries() {
-        val title = binding.editTextTitle.text.toString().trim()
-        val volumeIntegral = binding.editTextVolumeIntegral.text.toString().toIntOrNull() ?: 0
-        val volumeOwned = binding.editTextVolumeOwned.text.toString().toIntOrNull() ?: 0
-        val volumesRead = binding.editTextVolumesRead.text.toString().toIntOrNull() ?: 0
-        val chapitre = binding.editTextChapitre.text.toString().toIntOrNull() ?: 0
-        val state = binding.spinnerState.selectedItem.toString()
-        val coverUrl = binding.editTextCoverUrl.text.toString().trim()
+    private fun setupSearch() {
+        binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?) = false
 
-        addSeriesToDatabase(title, volumeIntegral, volumeOwned, volumesRead, chapitre, state, coverUrl)
-        finish()
-    }
-
-    private fun addSeriesToDatabase(title: String, volumeIntegral: Int, volumeOwned: Int, volumesRead: Int, chapitre: Int, state: String, coverUrl: String) {
-        val dbHelper = MangaDatabaseHelper(this)
-        dbHelper.addManga(title, volumeIntegral, volumeOwned, volumesRead, chapitre, state, coverUrl)
+            override fun onQueryTextChange(newText: String?): Boolean {
+                // Le filtrage préserve le tri alphabétique déjà appliqué sur allSeries
+                val filtered = allSeries.filter {
+                    it.title.contains(newText ?: "", ignoreCase = true)
+                }
+                (binding.recyclerViewMangas.adapter as MangaTitleAdapter).updateList(filtered)
+                return true
+            }
+        })
     }
 }
