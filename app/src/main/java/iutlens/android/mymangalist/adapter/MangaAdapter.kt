@@ -1,22 +1,21 @@
 package iutlens.android.mymangalist.adapter
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
-import iutlens.android.mymangalist.R
-import iutlens.android.mymangalist.databinding.ItemMangaBinding
-import iutlens.android.mymangalist.model.Manga
 import coil.load
 import coil.request.CachePolicy
+import iutlens.android.mymangalist.R
+import iutlens.android.mymangalist.databinding.ItemMangaBinding
+import iutlens.android.mymangalist.model.Serie
 
 class MangaAdapter(
-    private var mangas: List<Manga>,
-    private val onEditClick: (Manga) -> Unit
+    private var mangas: List<Serie>,
+    private val onItemClick: (Serie) -> Unit
 ) : RecyclerView.Adapter<MangaAdapter.MangaViewHolder>() {
 
-    fun updateList(newList: List<Manga>) {
+    fun updateList(newList: List<Serie>) {
         mangas = newList
         notifyDataSetChanged()
     }
@@ -27,65 +26,65 @@ class MangaAdapter(
     }
 
     override fun onBindViewHolder(holder: MangaViewHolder, position: Int) {
-        val manga = mangas[position]
-        Log.d("MangaAdapter", "Binding manga: ${manga.title}, cover URL: ${manga.coverUrl}")
-        holder.bind(manga)
+        holder.bind(mangas[position])
     }
 
-    override fun getItemCount(): Int = mangas.size
+    override fun getItemCount() = mangas.size
 
-    inner class MangaViewHolder(private val binding: ItemMangaBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(manga: Manga) {
-            binding.mangaTitle.text = manga.title
-            binding.mangaState.text = manga.state
-            binding.mangaVolumesOwned.text = "Tomes possédés: ${manga.volumesOwned}/${manga.volumeIntegral}"
+    inner class MangaViewHolder(private val binding: ItemMangaBinding) :
+        RecyclerView.ViewHolder(binding.root) {
 
-            val totalVolumes = manga.volumeIntegral
-            val volumesRead = manga.volumesRead
-            val volumesOwned = manga.volumesOwned
-
-            val progressPercentage = if (totalVolumes > 0) (volumesOwned.toFloat() / totalVolumes * 100).toInt() else 0
-            binding.progressBar.progress = progressPercentage
-            binding.mangaVolumesRead.text = "Tomes lus: ${manga.volumesRead}/${manga.volumeIntegral}"
-
-            val progressPercentage2 = if (totalVolumes > 0) (volumesRead.toFloat() / totalVolumes * 100).toInt() else 0
-            binding.progressBar2.progress = progressPercentage2
-
+        fun bind(manga: Serie) {
             val context = binding.root.context
-            val textColor = when (manga.state) {
-                "Fini" -> ContextCompat.getColor(context, R.color.green)
-                "Abandonné" -> ContextCompat.getColor(context, R.color.red)
-                else -> ContextCompat.getColor(context, R.color.orange)
+            val total   = manga.volumeIntegral
+
+            binding.mangaTitle.text = manga.title
+
+            // status vient directement du JSON : "En cours", "Terminé", etc.
+            val status = manga.status.orEmpty()
+            binding.mangaState.text = status.ifEmpty { "—" }
+
+            val statusColor = when (status.lowercase()) {
+                "en cours"              -> ContextCompat.getColor(context, R.color.orange)
+                "terminé", "terminée"   -> ContextCompat.getColor(context, R.color.light_green)
+                "abandonné", "abandonnée" -> ContextCompat.getColor(context, R.color.dark_red)
+                else                    -> ContextCompat.getColor(context, R.color.black)
             }
+            binding.mangaState.setTextColor(statusColor)
 
-            binding.chapitre.text = "Chapitre lu: ${manga.chapitre}"
-            binding.mangaState.setTextColor(textColor)
+            // Tomes possédés
+            binding.mangaVolumesOwned.text = "Tomes possédés: ${manga.volumesOwned}/$total"
+            val progressOwned = if (total > 0) (manga.volumesOwned.toFloat() / total * 100).toInt() else 0
+            binding.progressBar.progress = progressOwned
 
-            binding.editButton.setOnClickListener {
-                onEditClick(manga)
-            }
+            // Tomes lus
+            binding.mangaVolumesRead.text = "Tomes lus: ${manga.volumesRead}/$total"
+            val progressRead = if (total > 0) (manga.volumesRead.toFloat() / total * 100).toInt() else 0
+            binding.progressBar2.progress = progressRead
 
-            // Gérer les images locales ou en ligne
+            // Dernier chapitre lu
+            val last = manga.lastChapterRead
+            binding.chapitre.text = if (last > 0) "Dernier chapitre lu: $last" else "Aucun chapitre lu"
+
+            binding.root.setOnClickListener { onItemClick(manga) }
+
+            // Couverture
             if (manga.coverUrl.startsWith("http")) {
                 binding.mangaCover.load(manga.coverUrl) {
                     placeholder(R.drawable.default_cover)
                     error(R.drawable.default_cover)
                     crossfade(true)
                     networkCachePolicy(CachePolicy.ENABLED)
-                    listener(
-                        onError = { _, _ ->
-                            Log.e("MangaAdapter", "Error loading image from URL: ${manga.coverUrl}")
-                            binding.mangaCover.setImageResource(R.drawable.default_cover)
-                        }
-                    )
                 }
             } else {
-                val resourceId = context.resources.getIdentifier(manga.coverUrl.replace(".png", ""), "drawable", context.packageName)
-                if (resourceId != 0) {
-                    binding.mangaCover.setImageResource(resourceId)
-                } else {
-                    binding.mangaCover.setImageResource(R.drawable.default_cover)
-                }
+                val resourceId = context.resources.getIdentifier(
+                    manga.coverUrl.replace(".png", ""),
+                    "drawable",
+                    context.packageName
+                )
+                binding.mangaCover.setImageResource(
+                    if (resourceId != 0) resourceId else R.drawable.default_cover
+                )
             }
         }
     }

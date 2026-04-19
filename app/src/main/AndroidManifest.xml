@@ -28,8 +28,15 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".AddMangaActivity" />
+
+        <activity android:name=".EditMangaActivity" />
+
         <activity android:name=".NotesActivity" />
 
+        <activity android:name=".MangaDetailActivity"/>
+
+        <activity android:name=".MangaVolumesActivity" />
     </application>
 
 </manifest>
